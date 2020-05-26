@@ -59,7 +59,55 @@ files in the folder mentioned in STATIC_ROOT, you can change it if want to serve
 
 For making get request to serve the list of members and their activity period. <br/>
 
-/activity_record/members/ <br/>
+* /activity_record/members/ <br/>
+
+Response:
+* ok is a json boolean feild
+* members is a json array of Users, each user having following fields id, real_name, tz(timezone) and activity_periods
+* activity_periods is again a json array of active time periods with start_time and end_time.
+```json
+{
+    "ok": true,
+    "members": [
+        {
+            "id": "A15472216",
+            "real_name": "skus kfpj",
+            "tz": "Europe/Dublin",
+            "activity_periods": [
+                {
+                    "start_time": "Nov 27 2017 10:12 PM",
+                    "end_time": "Oct  5 2017  4:37 PM"
+                },
+                {
+                    "start_time": "Apr 14 2015 12:46 PM",
+                    "end_time": "May  4 2017  3:23 PM"
+                }
+            ]
+        },
+        {
+            "id": "Y37307426",
+            "real_name": "eukb lssk",
+            "tz": "Europe/Belfast",
+            "activity_periods": [
+                {
+                    "start_time": "Dec  3 2016 10:33 PM",
+                    "end_time": "Sep  4 2016 10:02 PM"
+                },
+                {
+                    "start_time": "Jan 15 2015  8:21 AM",
+                    "end_time": "Jun 23 2017 10:43 PM"
+                },
+                {
+                    "start_time": "Mar 15 2015  3:27 PM",
+                    "end_time": "Aug 22 2016  3:29 PM"
+                }
+            ]
+        }
+    ]
+}
+```
+
+
 
 ## Database Models used
 
