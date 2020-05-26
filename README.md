@@ -197,7 +197,7 @@ Class based API for serving get request. Here get function first makes a query t
 ## Custom Management Command to populate the database
 This command fills the database with the dummy data.<br/>
 command: `python manage.py populate_UserRecord` <br/>
-This command will be creating 5 User objects and each user will have 5 activity periods
+Command will be creating 5 User objects and each user will have 5 activity periods
 
 
 
