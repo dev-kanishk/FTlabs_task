@@ -195,10 +195,15 @@ Class based API for serving get request. Here get function first makes a query t
 
 
 ## Custom Management Command to populate the database
+This command fills the database with the dummy data.<br/>
+command: `python manage.py populate_UserRecord` <br/>
+This command will be creating 5 User objects and each user will have 5 activity periods
+
+
 
 
     class Command(BaseCommand):
-        help = "Save randomly generated stock record values."
+        help = "Save randomly generated User record values."
 
 
 
@@ -236,7 +241,7 @@ Class based API for serving get request. Here get function first makes a query t
             return self.randomString(8)
 
 
-
+        
         def handle(self, *args, **options):
             for _ in range(5):
                 kwargs = {
@@ -246,7 +251,10 @@ Class based API for serving get request. Here get function first makes a query t
                     'tz': self.get_Tz(),
                     'password': self.get_password()
                 }
+                # user object created
                 user = User.objects.create(**kwargs)
+                
+                #list for storing all the activity_period objects that belongs one user
                 activities = []
                 for _ in range(5):
                     kwargs = {
@@ -257,11 +265,12 @@ Class based API for serving get request. Here get function first makes a query t
 
                     activity_obj = activity_period(**kwargs)
                     activities.append(activity_obj)
-
+                    
+                 #creating objects by bulk_create method
                 activity_period.objects.bulk_create(activities)
 
 
-
+            # if database populated successfully following string will be printed on the terminal
             self.stdout.write(self.style.SUCCESS('Database populated successfully.'))
 
 
