@@ -124,7 +124,7 @@ Response:
 
 ## Database Models used
 
-####Users:<br/>
+#### Users:<br/>
 User models is an extention of AbstractUser model. <br/>
 Having additional Fields as follow <br/>
 * id as a primary key of fixed length 9 chars
@@ -141,7 +141,7 @@ Having additional Fields as follow <br/>
                 return self.real_name
 
 
-####Activity_period: <br/>
+#### Activity_period: <br/>
 Activity_period is a simple Django model having:
 * user as a Foreign Key to User model
 * start_time and end_time are for storing user active time period both are DateTimeField type.
