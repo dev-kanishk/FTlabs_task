@@ -64,9 +64,9 @@ For making get request to serve the list of members and their activity period. <
 ## Database Models used
 
 Users:<br/>
-id (primary-key, CharField)<br/>
-real_name (CharField) <br/>
-tz (TimeZone, CharField)<br/>
+id   (primary-key, CharField)<br/>
+real_name   (CharField) <br/>
+tz   (CharField)<br/>
 password <br/>
 
 Activity_period: <br/>
