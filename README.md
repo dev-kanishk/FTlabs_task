@@ -64,7 +64,7 @@ For making get request to serve the list of members and their activity period. <
 ## Database Models used
 
 Users:<br/>
-User models is extention of AbstractUser model. <br/>
+User models is an extention of AbstractUser model. <br/>
 Having additional Fields as follow <br/>
 * id as primary key
 * real_name simple character feild of max length 100
@@ -81,7 +81,7 @@ Having additional Fields as follow <br/>
 
 
 Activity_period: <br/>
-Activity_period is simple Django model having Foreign Key user to User model, start_time and end_time are for storing user active time period both are DateTimeField type.
+Activity_period is a simple Django model having Foreign Key user to User model, start_time and end_time are for storing user active time period both are DateTimeField type.
 
 
     class Activity_period(models.Model):
