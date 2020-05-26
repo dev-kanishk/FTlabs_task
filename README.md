@@ -47,7 +47,7 @@ Make sure DEBUG is True for running locally.
 **Step-10** Run command: `python manage.py runserver`
 <br/>
 
-## For running on some server:
+## For Hosted somewhere in a publicly accessible location like AWS or PythonAnywhere
 * Make sure DEBUG is True 
 * ALLOWED_HOST is configured according to usecase 
 * command: `python manage.py collectstatic` for collecting all the static 
@@ -57,10 +57,129 @@ files in the folder mentioned in STATIC_ROOT, you can change it if want to serve
 
 ## Rest-API end-point
 
-For making get request to serve the list of members and there activity period. <br/>
+For making get request to serve the list of members and their activity period. <br/>
 
 /activity_record/members/ <br/>
 
+## Database Models used
+
+Users:
+id (primary-key)
+real_name
+tz (TimeZone)
+password
+
+Activity_period:
+user (ForeignKey to User model)
+start_time
+end_time
+
+## Serializers 
+
+UserSerializer is a Model Based Nested Serializer, Nested because for every user object it calls for ActivityPeriodSerializer. 
+
+    class UserSerializer(serializers.ModelSerializer):
+        activity_periods = ActivityPeriodSerializer(many=True, read_only=True)
+
+        class Meta:
+            model = User
+            fields = ['id', 'real_name', 'tz', 'activity_periods']
+
+
+ActivityPeriodSerializer is a Model Based Serializer. Format of DateTimeField is explicity defined in the serializer
+
+    class ActivityPeriodSerializer(serializers.ModelSerializer):
+        start_time = serializers.DateTimeField(format='%b %e %Y %l:%M %p')
+        end_time = serializers.DateTimeField(format='%b %e %Y %l:%M %p')
+
+        class Meta:
+            model = activity_period
+            fields = ['start_time', 'end_time'] 
+        
+
+## API View
+
+Class based API for serving get request. Here get function first makes a query to database for all the User model and than pass the List of all Users to the the UserSerializer
+
+    class UsersList(APIView):
+
+        def get(self, request, format=None):
+            users = User.objects.all()
+            serializer = UserSerializer(users, many=True)
+            return Response({
+                'ok': True,
+                'members': serializer.data
+                })
+
+
+## Custom Management Command to populate the database
+
+    class Command(BaseCommand):
+        help = "Save randomly generated stock record values."
+
+
+
+        def get_dateTime(self):
+            # Naively generating a random date
+            day = random.randint(1, 28)
+            month = random.randint(1, 12)
+            year = random.randint(2014, 2017)
+            hour = random.randint(0,23)
+            min = random.randint(0,59)
+            sec = random.randint(0,59)
+            return datetime.datetime(year, month, day, hour, min, sec, tzinfo=pytz.UTC)
+
+        def randomString(self, stringLength=8):
+            letters = string.ascii_lowercase
+            return ''.join(random.choice(letters) for i in range(stringLength))
+
+        def get_id(self):
+            random_char = random.choice(string.ascii_uppercase)
+            random_num = random.randint(10000000,99999999)
+            return random_char+str(random_num)
+
+        def get_realName(self):
+            return self.randomString(4) + " " + self.randomString(4)
+
+        def get_Tz(self):
+            timeZones = ["America/Denver", "America/Belize", "America/Cancun", "America/Chicago", "Chile/EasterIsland", "America/Bogota", "Europe/Belfast", "Europe/Dublin", "Europe/Lisbon"]
+            random_index = random.randint(0,len(timeZones)-1)
+            return timeZones[random_index]
+
+        def get_password(self):
+            return self.randomString(8)
+
+        def get_username(self):
+            return self.randomString(8)
+
+
+
+        def handle(self, *args, **options):
+            for _ in range(5):
+                kwargs = {
+                    'id': self.get_id(),
+                    'username': self.get_username(),
+                    'real_name': self.get_realName(),
+                    'tz': self.get_Tz(),
+                    'password': self.get_password()
+                }
+                user = User.objects.create(**kwargs)
+                activities = []
+                for _ in range(5):
+                    kwargs = {
+                        'start_time': self.get_dateTime(),
+                        'end_time': self.get_dateTime(),
+                        'user': user
+                    }
+
+                    activity_obj = activity_period(**kwargs)
+                    activities.append(activity_obj)
+
+                activity_period.objects.bulk_create(activities)
+
+
+
+            self.stdout.write(self.style.SUCCESS('Database populated successfully.'))
 
 
 
