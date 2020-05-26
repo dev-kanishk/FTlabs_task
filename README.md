@@ -63,16 +63,16 @@ For making get request to serve the list of members and their activity period. <
 
 ## Database Models used
 
-Users:
-id (primary-key)
-real_name
-tz (TimeZone)
-password
+Users:<br/>
+id (primary-key, CharField)<br/>
+real_name (CharField) <br/>
+tz (TimeZone, CharField)<br/>
+password <br/>
 
-Activity_period:
-user (ForeignKey to User model)
-start_time
-end_time
+Activity_period: <br/>
+user (ForeignKey to User model) <br/>
+start_time (DateTimeField) <br/>
+end_time (DateTimeField)<br/>
 
 ## Serializers 
 
