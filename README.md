@@ -31,7 +31,7 @@ Currently Hosted at PythonAnywhere server: http://kanishkftltask.pythonanywhere.
 
 **Step-3:** Create new user and database in Postgres.
 
-**Step-4:** Find evn_example.txt in the repo you just cloned copy all those fields in a new file, save this file as .env and change all the fields according to Postgres setup.
+**Step-4:** Find evn_example.txt in the repo you just cloned, copy all text present in it to a new file, change all the fields in the text according to your Postgres setup and save this file as .env.<br/>
 Make sure DEBUG is True for running locally.
 
 **Step-5:** Find local_settings.example rename it as local_settings.py 
