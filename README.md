@@ -54,6 +54,19 @@ Make sure DEBUG is True for running locally.
 files in the folder mentioned in STATIC_ROOT, you can change it if want to server static from other location 
 
 ---
+## High level overview:
+This Django project consists of two Apps:
+* account
+* activityRecord
+
+#### account
+For User models and its related operations
+#### activityRecord
+activityRecord APP is reponsible for serving the get request at the following mentioned API end-point by making queries to the database and performing serialization. This APP also stores the data related to the users active period like start time and end time.
+#### Custom Management Command to populate the database
+This command can be run by `python manage.py populate_UserRecord` .<br/>
+Its code is present under activityRecord APP as follows activityRecord/management/commands/populate_UserRecord.py
+
 
 ## Rest-API end-point
 
@@ -62,8 +75,8 @@ For making get request to serve the list of members and their activity period. <
 * /activity_record/members/ <br/>
 
 Response:
-* ok is a json boolean field
-* members is a json array of Users, each user having following fields id, real_name, tz(timezone) and activity_periods
+* ok is a json boolean field.
+* members is a json array of Users, each user having following fields id, real_name, tz(timezone) and activity_periods.
 * activity_periods is again a json array of active time periods with start_time and end_time.
 ```json
 {
@@ -183,6 +196,7 @@ Class based API for serving get request. Here get function first makes a query t
 
 ## Custom Management Command to populate the database
 
+
     class Command(BaseCommand):
         help = "Save randomly generated stock record values."
 
@@ -249,6 +263,7 @@ Class based API for serving get request. Here get function first makes a query t
 
 
             self.stdout.write(self.style.SUCCESS('Database populated successfully.'))
+
 
 
 
