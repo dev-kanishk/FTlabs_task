@@ -65,14 +65,14 @@ For User models and its related operations.
 activityRecord APP is reponsible for serving the get request at the following mentioned API end-point by making queries to the database and performing serialization. This APP also stores the data related to the users active period like start time and end time.
 #### Custom Management Command to populate the database
 This command can be run by `python manage.py populate_UserRecord` .<br/>
-Its code is present under activityRecord APP as follows activityRecord/management/commands/populate_UserRecord.py
+Its code is present under activityRecord APP as follows `activityRecord/management/commands/populate_UserRecord.py`
 
 ---
 ## Rest-API end-point
 
 For making get request to serve the list of members and their activity period. <br/>
 
-* /activity_record/members/ <br/>
+* `/activity_record/members/` <br/>
 
 Response:
 * ok is a json boolean field.
