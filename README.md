@@ -62,7 +62,7 @@ For making get request to serve the list of members and their activity period. <
 * /activity_record/members/ <br/>
 
 Response:
-* ok is a json boolean feild
+* ok is a json boolean field
 * members is a json array of Users, each user having following fields id, real_name, tz(timezone) and activity_periods
 * activity_periods is again a json array of active time periods with start_time and end_time.
 ```json
