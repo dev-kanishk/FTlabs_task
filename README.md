@@ -64,15 +64,34 @@ For making get request to serve the list of members and their activity period. <
 ## Database Models used
 
 Users:<br/>
-id   (primary-key, CharField)<br/>
-real_name   (CharField) <br/>
-tz   (CharField)<br/>
-password <br/>
+User models is extention of AbstractUser model. <br/>
+Having additional Fields as follow <br/>
+* id as primary key
+* real_name simple character feild of max length 100
+* tz for timezone, a character feild of max length 100 with default as Asia/kolkata
+
+
+        class User(AbstractUser):
+            id = models.CharField(primary_key=True ,max_length=9, validators=[MinLengthValidator(9)])
+            real_name = models.CharField(max_length = 100)
+            tz = models.CharField(max_length = 100, default="Asia/kolkata")
+
+            def __str__(self):
+                return self.real_name
+
 
 Activity_period: <br/>
-user (ForeignKey to User model) <br/>
-start_time (DateTimeField) <br/>
-end_time (DateTimeField)<br/>
+Activity_period is simple Django model having Foreign Key user to User model, start_time and end_time are for storing user active time period both are DateTimeField type.
+
+
+    class Activity_period(models.Model):
+        start_time = models.DateTimeField()
+        end_time = models.DateTimeField()
+        user = models.ForeignKey(User, related_name='activity_periods',  on_delete=models.CASCADE)
+
+        def __str__(self):
+            to_display = str(self.start_time) + " to " + str(self.end_time)
+            return to_display
 
 ## Serializers 
 
@@ -93,7 +112,7 @@ ActivityPeriodSerializer is a Model Based Serializer. Format of DateTimeField is
         end_time = serializers.DateTimeField(format='%b %e %Y %l:%M %p')
 
         class Meta:
-            model = activity_period
+            model = Activity_period
             fields = ['start_time', 'end_time'] 
         
 
