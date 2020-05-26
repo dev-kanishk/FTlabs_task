@@ -70,7 +70,7 @@ Its code is present under activityRecord APP as follows `activityRecord/manageme
 ---
 ## Rest-API end-point
 
-Making get request for a list of members and their respective activity periods. <br/>
+Making a get request for the list of members and their respective activity periods. <br/>
 
 * `/activity_record/members/` <br/>
 
