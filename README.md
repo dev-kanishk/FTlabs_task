@@ -47,7 +47,7 @@ Make sure DEBUG is True for running locally.
 **Step-10** Run command: `python manage.py runserver`
 <br/>
 
-## For Hosted somewhere in a publicly accessible location like AWS or PythonAnywhere
+## For Hosting somewhere in a publicly accessible location like AWS or PythonAnywhere
 * Make sure DEBUG is False 
 * ALLOWED_HOST is configured according to usecase 
 * command: `python manage.py collectstatic` for collecting all the static 
