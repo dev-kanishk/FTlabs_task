@@ -48,7 +48,7 @@ Make sure DEBUG is True for running locally.
 <br/>
 
 ## For Hosted somewhere in a publicly accessible location like AWS or PythonAnywhere
-* Make sure DEBUG is True 
+* Make sure DEBUG is False 
 * ALLOWED_HOST is configured according to usecase 
 * command: `python manage.py collectstatic` for collecting all the static 
 files in the folder mentioned in STATIC_ROOT, you can change it if want to server static from other location 
