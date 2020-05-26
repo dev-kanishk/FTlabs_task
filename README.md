@@ -1,5 +1,5 @@
 # FTlabs task
-This is a Production ready Django Web Application having Django-Rest API for displaying active periods of different users.
+This is a Production ready Django Web Application having Django-Rest API for displaying active periods of different users along with a custom management command to populate the database.
 
 ---
 
