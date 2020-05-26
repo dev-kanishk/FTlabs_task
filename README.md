@@ -86,14 +86,14 @@ Activity_period is a simple Django model having:
 * start_time and end_time are for storing user active time period both are DateTimeField type.
 
 
-    class Activity_period(models.Model):
-        start_time = models.DateTimeField()
-        end_time = models.DateTimeField()
-        user = models.ForeignKey(User, related_name='activity_periods',  on_delete=models.CASCADE)
+            class Activity_period(models.Model):
+                start_time = models.DateTimeField()
+                end_time = models.DateTimeField()
+                user = models.ForeignKey(User, related_name='activity_periods',  on_delete=models.CASCADE)
 
-        def __str__(self):
-            to_display = str(self.start_time) + " to " + str(self.end_time)
-            return to_display
+                def __str__(self):
+                    to_display = str(self.start_time) + " to " + str(self.end_time)
+                    return to_display
 
 ## Serializers 
 
