@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinLengthValidator
 
-#Extented used model.
+#Extended user model.
 class User(AbstractUser):
     id = models.CharField(primary_key=True ,max_length=9, validators=[MinLengthValidator(9)])
     real_name = models.CharField(max_length = 100)
