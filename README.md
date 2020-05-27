@@ -46,14 +46,16 @@ Its code is present under activityRecord APP as follows `activityRecord/manageme
 ---
 ## Rest-API end-point
 
-Making a get request for the list of members and their respective activity periods. <br/>
+Get request for the list of members and their respective activity periods. <br/>
 
 * `/activity_record/members/` <br/>
 
 Response:
 * ok is a json boolean field.
-* members is a json array of Users, each user having following fields id, real_name, tz(timezone) and activity_periods.
-* activity_periods is again a json array of active time periods with start_time and end_time.
+* members is a json array of Users
+* Each User object has following fields id, real_name, tz(timezone) and activity_periods.
+* activity_periods is again a json array of active time period.
+* Each active time period has start_time and end_time fields.
 ```json
 {
     "ok": true,
@@ -103,34 +105,20 @@ Response:
 #### User:<br/>
 User models is an extention of AbstractUser model. <br/>
 Having additional Fields as follow <br/>
-* id as a primary key of fixed length 9 chars
-* real_name simple character feild of max length 100
-* tz for timezone, a character feild of max length 100 with default as Asia/kolkata
+* id  (primary key, Char-field, fixed length 9) 
+* real_name (Char-field, max length 100)
+* tz for timezone (Char-field, max length 100, default Asia/kolkata)
 
-
-        class User(AbstractUser):
-            id = models.CharField(primary_key=True ,max_length=9, validators=[MinLengthValidator(9)])
-            real_name = models.CharField(max_length = 100)
-            tz = models.CharField(max_length = 100, default="Asia/kolkata")
-
-            def __str__(self):
-                return self.real_name
 
 
 #### Activity_period: <br/>
 Activity_period is a simple Django model having:
-* user as a Foreign Key to User model
-* start_time and end_time are for storing user active time period both are DateTimeField type.
+* user (Foreign Key User model)
+* start_time (DateTimeField)
+* end_time (DateTimeField)
 
 
-            class Activity_period(models.Model):
-                start_time = models.DateTimeField()
-                end_time = models.DateTimeField()
-                user = models.ForeignKey(User, related_name='activity_periods',  on_delete=models.CASCADE)
-
-                def __str__(self):
-                    to_display = str(self.start_time) + " to " + str(self.end_time)
-                    return to_display
+          
 ## Hosting locally:
 **Step-1:** Clone the repo to your system.
 
@@ -159,28 +147,8 @@ Make sure DEBUG is True for running locally.
 * ALLOWED_HOST is configured according to usecase 
 * command: `python manage.py collectstatic` for collecting all the static 
 files in the folder mentioned in STATIC_ROOT, you can change it if want to server static from other location 
-## Serializers 
 
-UserSerializer is a Model Based Nested Serializer, Nested because for every user object it calls for ActivityPeriodSerializer. 
-
-    class UserSerializer(serializers.ModelSerializer):
-        activity_periods = ActivityPeriodSerializer(many=True, read_only=True)
-
-        class Meta:
-            model = User
-            fields = ['id', 'real_name', 'tz', 'activity_periods']
-
-
-ActivityPeriodSerializer is a Model Based Serializer. Format of DateTimeField is explicity defined in the serializer
-
-    class ActivityPeriodSerializer(serializers.ModelSerializer):
-        start_time = serializers.DateTimeField(format='%b %e %Y %l:%M %p')
-        end_time = serializers.DateTimeField(format='%b %e %Y %l:%M %p')
-
-        class Meta:
-            model = Activity_period
-            fields = ['start_time', 'end_time'] 
-        
+---
 
 ## API View
 
@@ -204,77 +172,6 @@ Command will be creating 5 User objects and each user will have 5 activity perio
 
 
 
-
-    class Command(BaseCommand):
-        help = "Save randomly generated User record values."
-
-
-
-        def get_dateTime(self):
-            # Naively generating a random date
-            day = random.randint(1, 28)
-            month = random.randint(1, 12)
-            year = random.randint(2014, 2017)
-            hour = random.randint(0,23)
-            min = random.randint(0,59)
-            sec = random.randint(0,59)
-            return datetime.datetime(year, month, day, hour, min, sec, tzinfo=pytz.UTC)
-
-        def randomString(self, stringLength=8):
-            letters = string.ascii_lowercase
-            return ''.join(random.choice(letters) for i in range(stringLength))
-
-        def get_id(self):
-            random_char = random.choice(string.ascii_uppercase)
-            random_num = random.randint(10000000,99999999)
-            return random_char+str(random_num)
-
-        def get_realName(self):
-            return self.randomString(4) + " " + self.randomString(4)
-
-        def get_Tz(self):
-            timeZones = ["America/Denver", "America/Belize", "America/Cancun", "America/Chicago", "Chile/EasterIsland", "America/Bogota", "Europe/Belfast", "Europe/Dublin", "Europe/Lisbon"]
-            random_index = random.randint(0,len(timeZones)-1)
-            return timeZones[random_index]
-
-        def get_password(self):
-            return self.randomString(8)
-
-        def get_username(self):
-            return self.randomString(8)
-
-
-        
-        def handle(self, *args, **options):
-            for _ in range(5):
-                kwargs = {
-                    'id': self.get_id(),
-                    'username': self.get_username(),
-                    'real_name': self.get_realName(),
-                    'tz': self.get_Tz(),
-                    'password': self.get_password()
-                }
-                # user object created
-                user = User.objects.create(**kwargs)
-                
-                #list for storing all the activity_period objects that belongs one user
-                activities = []
-                for _ in range(5):
-                    kwargs = {
-                        'start_time': self.get_dateTime(),
-                        'end_time': self.get_dateTime(),
-                        'user': user
-                    }
-
-                    activity_obj = activity_period(**kwargs)
-                    activities.append(activity_obj)
-                    
-                 #creating objects by bulk_create method
-                activity_period.objects.bulk_create(activities)
-
-
-            # if database populated successfully following string will be printed on the terminal
-            self.stdout.write(self.style.SUCCESS('Database populated successfully.'))
 
 
 
