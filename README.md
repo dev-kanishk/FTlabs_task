@@ -18,7 +18,7 @@ This is a Production ready Django Web Application having Django-Rest API for dis
 <br/>
 
 ## Demo
-Currently Hosted at PythonAnywhere server: http://kanishkftltask.pythonanywhere.com/activity_record/members/ . <br />
+Currently Hosted at PythonAnywhere server: https://kanishkftltask.pythonanywhere.com/activity_record/members/ . <br />
 
 ![](https://github.com/dev-kanishk/FTlabs_task/blob/master/Screenshot%20from%202020-05-26%2020-22-29.png)
 <br/>
