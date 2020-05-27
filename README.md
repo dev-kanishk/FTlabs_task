@@ -169,7 +169,7 @@ Class based API for serving get request. Here get function first makes a query t
 This command fills the database with the dummy data.<br/>
 command: `python manage.py populate_UserRecord` <br/>
 Command will be creating 5 User objects and each user will have 5 activity periods.<br/>
-For random string generation, I have used 'random.choice(string.ascii_lowercase)'<br/>
+For random string generation, I have used `random.choice(string.ascii_lowercase)`<br/>
 For integers `random.randint()`<br/>
 TimeZone(tz) by a List having number of TimeZone which are Hard coded <br/>
 Code is present under activityRecord APP as follows `activityRecord/management/commands/populate_UserRecord.py`
