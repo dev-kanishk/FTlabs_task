@@ -1,5 +1,5 @@
 # FullThrottle Labs - Backend Intern Assignment
-This is a Production ready Django Web Application having Django-Rest API for displaying active periods of different users along with a custom management command to populate the database.
+This is a Production ready Django Web Application having Django-Rest API that serves the list of members and their respective active periods. Custom management command to populate the database is also included.
 
 ---
 
