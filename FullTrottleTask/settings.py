@@ -118,6 +118,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR +'/static/'
 
 
+#for imporing local settings and keys
 try:
     from .local_settings import *
 except ImportError:
