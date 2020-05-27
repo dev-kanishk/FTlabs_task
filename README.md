@@ -124,7 +124,7 @@ Response:
 
 ## Database Models used
 
-#### Users:<br/>
+#### User:<br/>
 User models is an extention of AbstractUser model. <br/>
 Having additional Fields as follow <br/>
 * id as a primary key of fixed length 9 chars
